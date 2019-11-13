@@ -76,11 +76,15 @@ class Polynomial:
                 aux = aux + results[index+1]
             return aux
 
+    def __getitem__(self, x):
+        sol = sum([c*x**e for (e, c) in self._coeff.items()])
+        return sol
+
     def get_dict(self):
         return self._coeff
 
     def eval(self, x):
-        sol = sum([c*x**e for (e, c) in self._coeff])
+        sol = sum([c*x**e for (e, c) in self._coeff.items()])
         return sol
 
 
@@ -92,10 +96,14 @@ if __name__ == "__main__":
         print("Error:", type(e), str(e))
 
     Pol1 = Polynomial({2: 1, 1: 2, 0: 1})
-    Pol2 = Polynomial({2: 1, 1: 2, 0: 1})
+    Pol2 = Polynomial({2: 1, -1: -2, 0: 1})
     print("A = ", Pol1)
     print("B = ", Pol2)
     print("A + B = ", Pol1 + Pol2)
     print("A - B = ", Pol1 - Pol2)
-    print("A - abs(B)*2 = ", Pol1 - abs(Pol2)*2)  # 2 * abs(Pol2)
+    print("abs(B) = ", abs(Pol2))  # 2 * abs(Pol2)
     print("A * B = ", Pol1*Pol2)
+    #print("2 * B = ", 2*Pol2)  # sobrecargar la suma para int
+    print("B * 2 = ", Pol2*2)  # sobrecargar la mult para Poly
+    print("A(10) = ", Pol1.eval(10))
+    print(Pol1[10])
